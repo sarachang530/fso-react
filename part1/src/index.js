@@ -3,26 +3,33 @@ import ReactDOM from 'react-dom';
 // import useState from 'react';
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
+  const [clicks, setClicks] = useState({
+    left: 0,
+    right: 0,
+  });
 
-  const increaseByOne = () => {
-    setCounter(counter + 1);
-    console.log('clicked');
+  const handleLeftClick = () => {
+    setClicks({
+      ...clicks,
+      left: clicks.left + 1,
+    });
   };
 
-  const decreasedByOne = () => {
-  setCounter(counter - 1)
-}
-  const setToZero = () => {
-    setCounter(0);
+  const handleRightClick = () => {
+    setClicks({
+      ...clicks,
+      right: clicks.right + 1,
+    });
   };
 
   return (
     <div>
-      <Display counter={counter} />
-      <Button handleClick={increaseByOne} text='plus' />
-      <Button handleClick={decreasedByOne} text='minus' />
-      <Button handleClick={setToZero} text='zero' />
+      <div>
+        {clicks.left}
+        <button onClick={handleLeftClick}>left</button>
+        <button onClick={handleRightClick}>right</button>
+        {clicks.right}
+      </div>
     </div>
   );
 };
@@ -32,10 +39,6 @@ const Display = ({ counter }) => {
 };
 
 const Button = ({ handleClick, text }) => {
-  return (
-    <button onClick={handleClick}>
-      {text}
-    </button>
-  )
-}
+  return <button onClick={handleClick}>{text}</button>;
+};
 ReactDOM.render(<App />, document.getElementById('root'));
