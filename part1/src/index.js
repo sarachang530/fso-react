@@ -3,75 +3,89 @@ import ReactDOM from 'react-dom';
 // import useState from 'react';
 
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const [all, setAll] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+    total: 0,
+    average: 0,
+    positive: 0
+  });
 
   const handleGood = () => {
-    setGood(good + 1);
+    setAll({
+      ...all,
+      good: all.good + 1,
+      total: all.total + 1,
+      average: all.total / 3,
+      positive: (all.good / all.total) * 100
+    })
   };
   const handleNeutral = () => {
-    setNeutral(neutral + 1);
+    setAll({...all,
+    neutral: all.neutral + 1,
+    total: all.total + 1,
+    average: all.total / 3
+    })
   };
   const handleBad = () => {
-    setBad(bad + 1)
-  }
+    setAll({
+    ...all,
+    bad: all.bad + 1,
+    total: all.total + 1,
+    average: all.total / 3
+    })
+  };
+
 
   return (
     <div>
       <h1>Give Feedback</h1>
-      <Button onClick={handleGood} text='good'/>
-      <Button onClick={handleNeutral} text='neutral'/>
-      <Button onClick={handleBad} text='bad'/>
+      <Button onClick={handleGood} text="good" />
+      <Button onClick={handleNeutral} text="neutral" />
+      <Button onClick={handleBad} text="bad" />
       <p>Statistics</p>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
+      <Statistics good={all.good} neutral={all.neutral} bad={all.bad} total={all.total} average={all.average} positive={all.positive} />
+      {/* <p>good {all.good}</p>
+      <p>neutral {all.neutral}</p>
+      <p>bad {all.bad}</p>
+      <p>all {all.total}</p>
+      <p>plus {all.positive}%</p> */}
     </div>
-  )
+  );
 };
 
-const Button = ({ onClick, text }) => (
-  <button onClick={onClick}>{text}</button>
-)
-//   const handleLeftClick = () => {
-//     setAll(allClicks.concat('L'));
-//     setLeft(left + 1)
-//   };
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
-//   const handleRightClick = () => {
-//     setAll(allClicks.concat('R'));
-//     setRight(right + 1);
-//   };
 
-//   return (
-//     <div>
-//       <div>
-//         {left}
-//         <Button onClick={handleLeftClick} text='left' />
-//         <Button onClick={handleRightClick} text='right' />
-//         {right}
-//         <History allClicks={allClicks} />
-//       </div>
-//     </div>
-//   );
-// };
+const Statistics = ({ good, bad, neutral, total, average, positive }) => {
+  const all = good + bad + neutral
+  if(all === 0){
+    return (
+      <div>
+        No feedback given
+        </div>
+    )
+  }
+  return (
+    <div>
+      <Stat text='good' value={good} />
 
-// const History = (props) => {
-//   if(props.allClicks.length === 0){
-//     return (
-//       <div>the app is used by pressing the buttons</div>
-//     )
-//   }
-//   return (
-//     <div>
-//       button press history: {props.allClicks.join(' ')}
-//     </div>
-//   )
-// }
+      <Stat text='neutral' value={neutral} />
 
-// const Button = ({ onClick, text }) => (
-//   <button onClick={onClick}>{text}</button>
-// )
+      <Stat text='bad' value={bad} />
+      <Stat text='total' value={total} />
+      <Stat text='average' value={average} />
+      <Stat text='positive' value={positive} />
+    </div>
+  )
+}
+
+const Stat = ({ text, value }) =>{
+  return (
+    <div>{text} {value}</div>
+  )
+}
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
