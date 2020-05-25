@@ -1,4 +1,5 @@
 import React from 'react';
+import Total from './total';
 
 const Course = ({ course }) => {
   return (
@@ -6,6 +7,7 @@ const Course = ({ course }) => {
       <div key={course.id}>
         <Header name={course.name} />
         <Content parts={course.parts} />
+        <Total parts={course.parts} />
       </div>
     </div>
   );
@@ -17,18 +19,19 @@ const Header = ({ course }) => {
 
 const Content = ({ parts }) => {
   return (
-  <div>
-    {parts.map(part => <Part key={part.id} part={part}/>)}
-  </div>
-  )
+    <div>
+      {parts.map((part) => (
+        <Part key={part.id} part={part} />
+      ))}
+    </div>
+  );
 };
-  
 
 const Part = ({ part }) => {
-  return(
-  <div>
-    {part.name} {part.exercises}
-  </div>
-  )
+  return (
+    <div>
+      {part.name} {part.exercises}
+    </div>
+  );
 };
 export default Course;
