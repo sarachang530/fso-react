@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import RandomButton from './randomButton';
 import Votebutton from './voteBtn';
+import MostVotes from './mostVotes';
 
 const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
@@ -18,10 +19,12 @@ const App = ({ anecdotes }) => {
 
   return (
     <div>
-      {anecdotes[selected]}
-      has {votes[selected]} votes
+      <h1>Anecdote of the day</h1>
+      <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
       <RandomButton text="next anecdote" onClick={handleRandom} />
       <Votebutton text="vote" onClick={handleVotes} />
+      <MostVotes anecdotes={anecdotes} votes={votes} />
     </div>
   );
 };
